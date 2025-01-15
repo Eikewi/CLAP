@@ -18,15 +18,15 @@ useOpenAI = False
 
 def init_all_models(useOpenAI=False):
     #clean_serial()
-    init_a2t()
+    a2t_model = init_a2t()
     init_llm(useOpenAI)
-    return init_audio() #audio engine
+    return a2t_model, init_audio() #audio engine
 
-def main(audio_engine, useOpenAI=False):
+def main(audio_engine, a2t_model, useOpenAI=False):
 
     while True:
         record_audio()
-        txt_audio = a2t("output.mp3")
+        txt_audio = a2t(a2t_model, "output.mp3")
         print(f"Debug: {txt_audio}")
 
         audio_lambda = lambda x: create_audio(x, audio_engine)
@@ -41,8 +41,7 @@ def main(audio_engine, useOpenAI=False):
 
 if __name__ == "__main__":
 
-    audio_engine = init_all_models(useOpenAI)
+    a2t_model, audio_engine = init_all_models(useOpenAI)
     input("Init finished, press enter to continue:")
-    #record_audio()
-    main(audio_engine)
-    #print(run_llm("Was ist der unterschied zwischen einer Matrix und einem Tensor?", audio_engine, 1, True))
+    main(audio_engine, a2t_model)
+    # print(run_llm("Was ist der unterschied zwischen einer Matrix und einem Tensor?", audio_engine, 1, True))

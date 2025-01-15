@@ -1,9 +1,10 @@
 import serial
 import numpy as np
 from pydub import AudioSegment
+import platform
 
 # Einstellungen für die serielle Verbindung
-SERIAL_PORT = '/dev/cu.usbmodem1401'  # Passe dies an deinen COM-Port an (z.B. /dev/ttyUSB0 für Linux/Mac)
+SERIAL_PORT = '/dev/cu.usbmodem1401' if platform.system() == "Darwin" else "/dev/ttyACM0" # Passe dies an deinen COM-Port an (z.B. /dev/ttyUSB0 für Linux/Mac)
 BAUD_RATE = 115200
 DURATION = 100  
 OUTPUT_FILE = "output.mp3"
