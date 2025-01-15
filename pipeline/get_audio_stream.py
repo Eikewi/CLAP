@@ -82,6 +82,7 @@ def record_audio():
 
     print(f"Aufnahme beendet. {len(audio_data)} Samples gesammelt.")
 
+    audio_data = np.clip(audio_data, -32768, 32767) #make sure we do not get a overflow
     audio_array = np.array(audio_data, dtype=np.int16)
 
     # create AudioSegment (Mono, 16 kHz, 16-bit PCM)

@@ -12,10 +12,10 @@ Local models: Use Ollama API for an Mac optimize local models.
 # Ollama local-API:
 url = "http://localhost:11434/api/generate"
 
-def init_llm(useOpenAI):
+def init_llm(model, useOpenAI):
     if not useOpenAI:
         data = {
-            "model": "llama3.1",
+            "model": f"{model}",
             "prompt": ""
         }
         requests.post(url, json=data, stream=True)
