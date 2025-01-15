@@ -9,13 +9,11 @@ Local models: Use Ollama API for an Mac optimize local models.
 '''
 
 # API-URL
-# Ollama API:
+# Ollama local-API:
 url = "http://localhost:11434/api/generate"
 
 def init_llm(useOpenAI):
-    if useOpenAI:
-        load_dotenv() # get API key for OpenAI
-    else:
+    if not useOpenAI:
         data = {
             "model": "llama3.1",
             "prompt": ""
@@ -23,7 +21,7 @@ def init_llm(useOpenAI):
         requests.post(url, json=data, stream=True)
 
 
-def run_llm(input: str, audio_lambda, threshold:int, useOpenAI=False):
+def run_llm(input: str, audio_lambda, threshold:int, model, useOpenAI=False):
     """
     Executes a large language model (LLM) process with the given input.
 
@@ -40,25 +38,30 @@ def run_llm(input: str, audio_lambda, threshold:int, useOpenAI=False):
 
     # use OpenAI model
     if useOpenAI: 
+        load_dotenv()
         client = OpenAI(
             api_key=os.environ.get("OPENAI_API_KEY"),
         )
 
         completion = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=f"{model}",
             store=True,
             messages=[
                 {"role": "user", "content": f"{input}"}
             ]
         )
-        print(completion)
-        return
+
+        txt = completion.choices[0].message.content
+        print("ChatGPT answer:")
+        print(txt)
+        audio_lambda(txt)
+        return 
     
     # Use local model
     else: 
 
         data = {
-        "model": "llama3.1",
+        "model": f"{model}",
         "prompt": f"{input}"
         }
 
@@ -67,6 +70,8 @@ def run_llm(input: str, audio_lambda, threshold:int, useOpenAI=False):
         message = ""
         start_pos = 0
         skip = False
+
+        print("Local LLM answer:")
 
         # work with the stream
         for line in response.iter_lines():

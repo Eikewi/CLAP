@@ -9,14 +9,26 @@ TODO:
 [ ] multithreading for txt2speech (faster answers)
 ---------------------------------------------------
 [x] using ChatGPT API
-    [ ] test ChatGPT API key
+    [x] test ChatGPT API key
 ---------------------------------------------------
 [ ] Chat history for llm (context based answers)
 ---------------------------------------------------
 '''
-useOpenAI = False
+# Should OpenAI be used (Note: an API-Key needed)
+useOpenAI = True
+
+# ---------Choose an available model---------------
+# OpenAI model list: https://openai.com/api/pricing/
+if useOpenAI:
+    model = "gpt-4o-mini"
+else:
+# Ollama model list: https://ollama.com/library (or https://huggingface.co/docs/hub/ollama)
+    model = "llama3.1"
 
 def init_all_models(useOpenAI=False):
+    '''
+    preload all the models in the cache
+    '''
     #clean_serial()
     a2t_model = init_a2t()
     init_llm(useOpenAI)
@@ -32,10 +44,7 @@ def main(audio_engine, a2t_model, useOpenAI=False):
         audio_lambda = lambda x: create_audio(x, audio_engine)
         run_llm(txt_audio, audio_lambda, 1, useOpenAI)
 
-        #print(f"Answer of the llm: {llm_answer}\n")
         #create_audio(llm_answer, audio_engine)
-
-        input("press Enter to get new Input:")
 
 
 
@@ -43,5 +52,6 @@ if __name__ == "__main__":
 
     a2t_model, audio_engine = init_all_models(useOpenAI)
     input("Init finished, press enter to continue:")
-    main(audio_engine, a2t_model)
-    # print(run_llm("Was ist der unterschied zwischen einer Matrix und einem Tensor?", audio_engine, 1, True))
+    main(audio_engine, a2t_model, useOpenAI)
+    #audio_lambda = lambda x: create_audio(x, audio_engine)
+    #print(run_llm("Was ist der unterschied zwischen einer Matrix und einem Tensor?", audio_lambda, 1, True))

@@ -4,9 +4,9 @@ from pydub import AudioSegment
 import platform
 
 # Einstellungen für die serielle Verbindung
-SERIAL_PORT = '/dev/cu.usbmodem1401' if platform.system() == "Darwin" else "/dev/ttyACM0" # Passe dies an deinen COM-Port an (z.B. /dev/ttyUSB0 für Linux/Mac)
+SERIAL_PORT = '/dev/cu.usbmodem11401' if platform.system() == "Darwin" else "/dev/ttyACM0" # Passe dies an deinen COM-Port an (z.B. /dev/ttyUSB0 für Linux/Mac)
 BAUD_RATE = 115200
-DURATION = 100  
+START_DURATION = 100  
 OUTPUT_FILE = "output.mp3"
 NUM_TIMEOUT_SAMPLES = 30000 # Number of samples needed to trigger a timeout
 
@@ -46,19 +46,32 @@ def record_audio():
     with serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1) as ser:
         while True:
             try:
-                # Lese 2 Bytes für ein 16-Bit Sample
+                # read 2 bytes for a 16-bit sample
                 data = ser.read(2)
                 if len(data) == 2:
                     sample = int.from_bytes(data, byteorder='little', signed=True)
                     audio_data.append(sample*30) # make the audio 30 x loader
                     print(sample)
                     count_TIMEOUT +=1
-                    #count_TIMEOUT = 0
-                    if abs(sample) > 100:
-                        # Someone is speaking
+                    if abs(sample) > START_DURATION:
+                        # someone is speaking
                         print("LOUD!!!!!")
                         count_TIMEOUT = 0
-                    if count_TIMEOUT > NUM_TIMEOUT_SAMPLES:
+                    
+                    '''
+                    Calculate the ending threshold 
+                    (-> speaking a long time results in less samples needed without loud noice to stop recording)
+
+                        Alpha is a value that decreases from 1 to 0.5 in a reciprocal manner.
+                            -> set Alpha to 1 for no convergence
+                        Increase the scale for slower convergence.
+                        end_val indicates the target value to which we are converging.
+                    '''
+                    scale = 16000
+                    end_val = 0.1
+                    alpha = min(1, (scale / len(audio_data)) + end_val)
+
+                    if count_TIMEOUT > NUM_TIMEOUT_SAMPLES * alpha:
                         stop_recording()
                         print(count_TIMEOUT)
                         break
