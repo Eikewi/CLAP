@@ -50,7 +50,7 @@ void setup() {
   pinMode(LED_RED, OUTPUT);
   pinMode(LED_GREEN, OUTPUT);
   pinMode(LED_BLUE, OUTPUT);
-  currentState = START_KEYWORD_DETECTION;
+  currentState = AUDIO_STOPPED;
   Serial.begin(115200);
   while (!Serial);
 
