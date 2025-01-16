@@ -20,8 +20,15 @@ TODO:
 ---------------------------------------------------
 [ ] be able to interrupt CLAP
 ---------------------------------------------------
-[ ] support english txt2audio
+[ ] support english in txt2audio (currently only german)
 ---------------------------------------------------
+FIXME:
+[ ] Sometimes activates 
+    without waiting for the activation word
+=> i think it happens when the audio buffer gets cut off 
+    before everything was send
+Recrate: 1. start clap and do not say anything
+         2. Wait for answer and see that it restarts instant after that
 '''
 # Should OpenAI be used (Note: an API-Key needed)
 useOpenAI = False
@@ -29,7 +36,7 @@ useOpenAI = False
 # NOTE: NOT YET FULLY TESTED
 # Change if used in an loud environment to f.e. 0.5
 #   (high values -> wait longer for a response)
-tolerance = 1.0
+tolerance = 3.0
 
 # ---------Choose an available model---------------
 # OpenAI model list: https://openai.com/api/pricing/

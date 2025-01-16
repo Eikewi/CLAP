@@ -16,6 +16,6 @@ def a2t(a2t_model, audio_file):
     else:
         txt_audio =  whisper.transcribe(a2t_model, audio=audio_file)
         
-    print(f"Extracted audio: {txt_audio}\n")
+    #print(f"Extracted audio: {txt_audio}\n")
     return txt_audio['text']
 

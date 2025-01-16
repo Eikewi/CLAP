@@ -64,7 +64,7 @@ def run_llm(input: str, audio_lambda, threshold:int, model, useOpenAI=False):
         data = {
         "model": f"{model}",
         "prompt": f"{input}", 
-        "system": f"Du bist ein Sprachassistent. Halte dich kurz. Bitte vermeide Stichpunkte oder Ähnliches, das schwer lesbar ist."
+        "system": f"Du bist ein Sprachassistent. Antworte nur in 2-3 Sätzen. Bitte vermeide Stichpunkte oder Ähnliches, das schwer lesbar ist."
         }
 
         response = requests.post(url, json=data, stream=True)
@@ -87,7 +87,7 @@ def run_llm(input: str, audio_lambda, threshold:int, model, useOpenAI=False):
 
                     #start with the first sentences to get a faster answer 
                     if len(positions) > threshold and not skip:
-                        end_pos = positions[-1]
+                        end_pos = positions[-1]+1
                         print(message[start_pos:end_pos])
                         audio_lambda(message[start_pos:end_pos])
                         start_pos = end_pos
