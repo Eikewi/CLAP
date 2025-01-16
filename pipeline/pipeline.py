@@ -1,17 +1,22 @@
 from audio_2_txt import init_a2t, a2t
 from txt_llm import run_llm, init_llm
-from txt_2_audio import create_audio, init_audio
+from txt_2_audio import create_audio, init_audio, tts_process
 from get_audio_stream import record_audio, clean_serial
+
+from multiprocessing import Process, Queue
+from time import time
 
 '''
 TODO:
 ---------------------------------------------------
-[ ] multithreading for txt2speech (faster answers)
+[x] multithreading for txt2speech (faster answers)
 ---------------------------------------------------
 [x] using ChatGPT API
     [x] test ChatGPT API key
 ---------------------------------------------------
 [ ] Chat history for llm (context based answers)
+    [ ] history for OpenAI
+    [ ] history for Ollama
 ---------------------------------------------------
 [ ] be able to interrupt CLAP
 ---------------------------------------------------
@@ -21,43 +26,62 @@ TODO:
 # Should OpenAI be used (Note: an API-Key needed)
 useOpenAI = False
 
+# NOTE: NOT YET FULLY TESTED
+# Change if used in an loud environment to f.e. 0.5
+#   (high values -> wait longer for a response)
+tolerance = 1.0
+
 # ---------Choose an available model---------------
 # OpenAI model list: https://openai.com/api/pricing/
 if useOpenAI:
     model = "gpt-4o-mini"
 else:
-# Ollama model list: https://ollama.com/library (or https://huggingface.co/docs/hub/ollama)
+# Ollama model list: https://ollama.com/library 
+#                    (or https://huggingface.co/docs/hub/ollama)
     model = "llama3.1"
 
 def init_all_models(model, useOpenAI=False):
     '''
     preload all the models in the cache
     '''
-    #clean_serial()
     a2t_model = init_a2t()
     init_llm(model, useOpenAI)
-    return a2t_model, init_audio() #audio engine
+    return a2t_model
 
-def main(audio_engine, a2t_model, model, useOpenAI=False):
+def main(a2t_model, model, tolerance, useOpenAI=False):
 
     while True:
-        record_audio()
+        # use multithreading for the txt2audio processing
+        tts_queue = Queue()
+        tts_proc = Process(target=tts_process, args=(tts_queue,))
+
+
+        record_audio(tolerance)
         print("Audio was recorded")
+        a2t_time1 = time()
         txt_audio = a2t(a2t_model, "output.mp3")
+        a2t_time2 = time()
         print(f"Text from Audio: {txt_audio}")
+        print(f"--------t2a took {round(a2t_time2 - a2t_time1, 2)}s--------")
 
-        audio_lambda = lambda x: create_audio(x, audio_engine)
+        audio_lambda = lambda x: create_audio(x, tts_queue)
+
+        llm_time1 = time()
+        tts_proc.start()
         run_llm(txt_audio, audio_lambda, 1, model, useOpenAI)
-        print("Audioengine and llm finished")
 
-        #create_audio(llm_answer, audio_engine)
+        tts_queue.put(None)
+        tts_proc.join()
+        llm_time2 = time()
+        print("Audioengine and llm finished")
+        print(f"--------llm and audio took {round(llm_time2-llm_time1, 2)}s--------")
 
 
 
 if __name__ == "__main__":
 
-    a2t_model, audio_engine = init_all_models(model, useOpenAI)
-    input("Init finished, press enter to continue:")
-    main(audio_engine, a2t_model, model, useOpenAI)
-    #audio_lambda = lambda x: create_audio(x, audio_engine)
-    #print(run_llm("Was ist der unterschied zwischen einer Matrix und einem Tensor?", audio_lambda, 1, True))
+    init_time1 = time()
+    a2t_model= init_all_models(model, useOpenAI)
+    init_time2 = time()
+    input(f"--------Init finished and took {round(init_time2-init_time1, 2)}s,--------\n press ENTER to continue:")
+    main(a2t_model, model, tolerance, useOpenAI)

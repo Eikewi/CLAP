@@ -13,18 +13,22 @@ import pyttsx3
 def init_audio():
     return pyttsx3.init()
 
-def create_audio(text, engine):
-    # Initialisieren des TTS-Engines
+def tts_process(tts_queue):
+    """Separater Prozess für die TTS-Engine."""
+    engine = pyttsx3.init() # can not be refactored, because engine can not be pickled
     engine.setProperty('rate', 165)
-    # for voice in voices:
-    #     print(f"Voice: {voice.name} | ID: {voice.id} | Language: {voice.languages}")
 
-    engine.say(text)
+    while True:
+        text = tts_queue.get()
+        if text is None:  # signal to end process
+            break
+        #print(f"TTS verarbeitet: {text}")
+        engine.say(text)
+        engine.runAndWait()
 
-    #if you want to save the File:
-    #engine.save_to_file('Hello World' , 'test.mp3')
-
-    engine.runAndWait()
+def create_audio(text, tts_queue):
+    # Initialisieren des TTS-Engines
+    tts_queue.put(text)
 
 #available Languages:
 '''

@@ -36,7 +36,7 @@ def send_number(num=b'\x01'):
     except Exception as e:
         print(f"Error while sending a number: {e}")
 
-def record_audio():
+def record_audio(tolerance=1.0):
     print("start recording...")
     start_recording()
 
@@ -69,7 +69,7 @@ def record_audio():
                     '''
                     scale = 16000
                     end_val = 0.1
-                    alpha = min(1, (scale / len(audio_data)) + end_val)
+                    alpha = min(1, (tolerance*scale / len(audio_data)) + end_val)
 
                     if count_TIMEOUT > NUM_TIMEOUT_SAMPLES * alpha:
                         stop_recording()

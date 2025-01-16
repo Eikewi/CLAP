@@ -3,6 +3,7 @@ import json
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from time import time
 
 '''
 Local models: Use Ollama API for an Mac optimize local models.
@@ -55,14 +56,15 @@ def run_llm(input: str, audio_lambda, threshold:int, model, useOpenAI=False):
         print("ChatGPT answer:")
         print(txt)
         audio_lambda(txt)
-        return 
+        return txt
     
     # Use local model
     else: 
 
         data = {
         "model": f"{model}",
-        "prompt": f"{input}"
+        "prompt": f"{input}", 
+        "system": f"Du bist ein Sprachassistent. Halte dich kurz. Bitte vermeide Stichpunkte oder Ähnliches, das schwer lesbar ist."
         }
 
         response = requests.post(url, json=data, stream=True)
