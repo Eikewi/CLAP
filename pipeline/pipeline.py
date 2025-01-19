@@ -14,9 +14,9 @@ TODO:
 [x] using ChatGPT API
     [x] test ChatGPT API key
 ---------------------------------------------------
-[ ] Chat history for llm (context based answers)
-    [ ] history for OpenAI
-    [ ] history for Ollama
+[x] Chat history for llm (context based answers)
+    [x] history for OpenAI
+    [x] history for Ollama
 ---------------------------------------------------
 [ ] be able to interrupt CLAP
 ---------------------------------------------------
@@ -42,10 +42,15 @@ tolerance = 3.0
 # OpenAI model list: https://openai.com/api/pricing/
 if useOpenAI:
     model = "gpt-4o-mini"
+    n_remember_msg = 10 
 else:
 # Ollama model list: https://ollama.com/library 
 #                    (or https://huggingface.co/docs/hub/ollama)
     model = "llama3.1"
+
+    # How many messages should be remembered 
+    #    (large numbers reduce the answer quality)
+    n_remember_msg = 3 
 
 def init_all_models(model, useOpenAI=False):
     '''
@@ -55,7 +60,7 @@ def init_all_models(model, useOpenAI=False):
     init_llm(model, useOpenAI)
     return a2t_model
 
-def main(a2t_model, model, tolerance, useOpenAI=False):
+def main(a2t_model, model, tolerance, n_remember_msg, useOpenAI=False):
 
     while True:
         # use multithreading for the txt2audio processing
@@ -70,12 +75,13 @@ def main(a2t_model, model, tolerance, useOpenAI=False):
         a2t_time2 = time()
         print(f"Text from Audio: {txt_audio}")
         print(f"--------t2a took {round(a2t_time2 - a2t_time1, 2)}s--------")
+        #txt_audio = input("Frage:") # If you want to use llm without Arduino (uncomment above)
 
         audio_lambda = lambda x: create_audio(x, tts_queue)
 
         llm_time1 = time()
         tts_proc.start()
-        run_llm(txt_audio, audio_lambda, 1, model, useOpenAI)
+        run_llm(txt_audio, audio_lambda, 1, model, n_remember_msg, useOpenAI)
 
         tts_queue.put(None)
         tts_proc.join()
@@ -91,4 +97,4 @@ if __name__ == "__main__":
     a2t_model= init_all_models(model, useOpenAI)
     init_time2 = time()
     input(f"--------Init finished and took {round(init_time2-init_time1, 2)}s,--------\n press ENTER to continue:")
-    main(a2t_model, model, tolerance, useOpenAI)
+    main(a2t_model, model, tolerance, n_remember_msg, useOpenAI)
