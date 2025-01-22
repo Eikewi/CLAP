@@ -1,11 +1,14 @@
 # CLAP
 
+An awesome voice assistant with a keyword-detection-neural-network running on an Arduino and a configurable AI-Pipeline!
+
 ## Arduino 
 
 What you need: 
 - CLAP_inferencing.zip included as ZIP-Library in Arduino IDE
 - A working Arduino Nano 33 BLE Sense Rev2
-- A working computer
+- A USB-to-Micro-USB cable
+- A working computer with USB ports
 
 ### Keyword-Detection
 
@@ -43,7 +46,7 @@ Serial: Empty, when SHOW_RESULTS is false
 
 ### Python
 
-Tested on Python v3.12.3
+Tested on Python v3.12.3 [Download-Link](https://www.python.org/downloads/)
 
 ### Packages
 
@@ -71,10 +74,13 @@ Windows: `winget install "FFmpeg (Essentials Build)"`
 
 MacOS: `brew install ffmpeg`
 
+### OpenAI API Key
+Add that key into a `.env`-file within `CLAP` like `OPENAI_API_KEY=<secret-key-we-dont-share-on-github>`
+
 ### Running the python script
 
 Simply run `pipeline.py` in `CLAP/pipeline`
 
 ## Things that you can modify
 
-useOpenAI in the first lines of `pipeline.py` can be set to `True`, if you want to have ChatGPT as the LLM, it is set to Ollama in case it is set to `False`.  
+useOpenAI in the first lines of `pipeline.py` can be set to `True`, if you want to have ChatGPT as the LLM, it is using Ollama in case it is set to `False`.  
