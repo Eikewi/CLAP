@@ -2,7 +2,10 @@
 
 ## Arduino 
 
-What you need: CLAP_inferencing.zip included as ZIP-Library in Arduino IDE
+What you need: 
+- CLAP_inferencing.zip included as ZIP-Library in Arduino IDE
+- A working Arduino Nano 33 BLE Sense Rev2
+- A working computer
 
 ### Keyword-Detection
 
@@ -63,9 +66,15 @@ pip install pyserial numpy pydub whisper-mps pyttsx3 python-dotenv openai
 ### ffmpeg
 
 Linux: `sudo apt-get update && sudo apt-get install ffmpeg`
+
 Windows: `winget install "FFmpeg (Essentials Build)"`
+
 MacOS: `brew install ffmpeg`
 
 ### Running the python script
 
-Simply run pipeline.py in Project/pipeline
+Simply run `pipeline.py` in `CLAP/pipeline`
+
+## Things that you can modify
+
+useOpenAI in the first lines of `pipeline.py` can be set to `True`, if you want to have ChatGPT as the LLM, it is set to Ollama in case it is set to `False`.  

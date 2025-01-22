@@ -3,8 +3,21 @@ import numpy as np
 from pydub import AudioSegment
 import platform
 
-# Einstellungen für die serielle Verbindung
-SERIAL_PORT = '/dev/cu.usbmodem11101' if platform.system() == "Darwin" else "/dev/ttyACM0" # Passe dies an deinen COM-Port an (z.B. /dev/ttyUSB0 für Linux/Mac)
+import serial.tools
+import serial.tools.list_ports
+
+import serial.tools.list_ports
+
+def find_arduino():
+    """
+    Find the port of the Arduino. 
+    """
+    ports = serial.tools.list_ports.comports()
+    for port in ports:
+        if "Arduino" in port.description or "Nano 33 BLE" in port.description:
+            return port.device     
+    return None
+SERIAL_PORT = find_arduino()
 BAUD_RATE = 115200
 START_DURATION = 100  
 OUTPUT_FILE = "output.mp3"
@@ -73,7 +86,7 @@ def record_audio(tolerance=1.0):
 
                     if count_TIMEOUT > NUM_TIMEOUT_SAMPLES * alpha:
                         stop_recording()
-                        print(count_TIMEOUT)
+                        # print(count_TIMEOUT)
                         break
 
             except Exception as e:
