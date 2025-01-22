@@ -31,7 +31,7 @@ Recrate: 1. start clap and do not say anything
          2. Wait for answer and see that it restarts instant after that
 '''
 # Should OpenAI be used (Note: an API-Key needed)
-useOpenAI = True
+useOpenAI = False
 
 # NOTE: NOT YET FULLY TESTED
 # Change if used in an loud environment to f.e. 0.5

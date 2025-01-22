@@ -51,11 +51,11 @@ def record_audio(tolerance=1.0):
                 if len(data) == 2:
                     sample = int.from_bytes(data, byteorder='little', signed=True)
                     audio_data.append(sample*30) # make the audio 30 x loader
-                    print(sample)
+                    print(f"{sample}    ", end="\r")
                     count_TIMEOUT +=1
                     if abs(sample) > START_DURATION:
                         # someone is speaking
-                        print("LOUD!!!!!")
+                        print("LOUD!!", end="\r")
                         count_TIMEOUT = 0
                     
                     '''
