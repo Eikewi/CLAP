@@ -17,6 +17,7 @@ def tts_process(tts_queue):
     """Separater Prozess für die TTS-Engine."""
     engine = pyttsx3.init() # can not be refactored, because engine can not be pickled
     engine.setProperty('rate', 165)
+    #engine.setProperty('voice', "com.apple.eloquence.en-US.Eddy")
 
     while True:
         text = tts_queue.get()

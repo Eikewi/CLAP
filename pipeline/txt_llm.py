@@ -12,6 +12,7 @@ Local models: Use Ollama API for an Mac optimize local models.
 # API-URL
 # Ollama local-API:
 url = "http://localhost:11434/api/generate"
+sys_instruction = "You are a language assistant that only speaks english. Respond in only 2-3 sentences. Please avoid bullet points or anything similar that is hard to read."
 conversation_history = []
 
 def init_llm(model, useOpenAI):
@@ -47,6 +48,13 @@ def run_llm(input: str, audio_lambda, threshold:int, model, n_remember_msg=1, us
         client = OpenAI(
             api_key=os.environ.get("OPENAI_API_KEY"),
         )
+        if not any(msg["role"] == "system" for msg in conversation_history):
+            system_instruction = {
+                "role": "system",
+                "content": f"{sys_instruction}"
+            }
+            conversation_history.insert(0, system_instruction)
+
         conversation_history.append({"role": "user", "content": input})
 
         completion = client.chat.completions.create(
@@ -73,10 +81,15 @@ def run_llm(input: str, audio_lambda, threshold:int, model, n_remember_msg=1, us
             elif message["role"] == "assistant":
                 prompt += f"Assistant: {message['content']}\n"
 
+        # data = {
+        # "model": f"{model}",
+        # "prompt": f"{prompt}", 
+        # "system": f"Du bist ein Sprachassistent. Antworte nur in 2-3 Sätzen. Bitte vermeide Stichpunkte oder Ähnliches, das schwer lesbar ist."
+        # }
         data = {
         "model": f"{model}",
         "prompt": f"{prompt}", 
-        "system": f"Du bist ein Sprachassistent. Antworte nur in 2-3 Sätzen. Bitte vermeide Stichpunkte oder Ähnliches, das schwer lesbar ist."
+        "system": f"{sys_instruction}"
         }
         print(conversation_history)
         response = requests.post(url, json=data, stream=True)

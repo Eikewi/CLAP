@@ -4,18 +4,18 @@ from pydub import AudioSegment
 import platform
 
 # Einstellungen für die serielle Verbindung
-SERIAL_PORT = '/dev/cu.usbmodem11401' if platform.system() == "Darwin" else "/dev/ttyACM0" # Passe dies an deinen COM-Port an (z.B. /dev/ttyUSB0 für Linux/Mac)
+SERIAL_PORT = '/dev/cu.usbmodem11101' if platform.system() == "Darwin" else "/dev/ttyACM0" # Passe dies an deinen COM-Port an (z.B. /dev/ttyUSB0 für Linux/Mac)
 BAUD_RATE = 115200
 START_DURATION = 100  
 OUTPUT_FILE = "output.mp3"
 NUM_TIMEOUT_SAMPLES = 30000 # Number of samples needed to trigger a timeout
 
 def stop_recording():
-    print("Recording stopped")
+    print("Keyword detection stopped")
     send_number(b'\x01')
 
 def start_recording():
-    print("Recording started")
+    print("Keyword detection started")
     send_number(b'\x02')
 
 def clean_serial():

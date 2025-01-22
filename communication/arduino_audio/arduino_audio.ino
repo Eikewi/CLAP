@@ -225,20 +225,20 @@ void stream_pdm_end() {
 */
 static bool inference_pdm_start(uint32_t n_samples)
 {
-  inference.buffers[0] = (signed short *)malloc(n_samples * sizeof(signed short));
+  inference.buffers[0] = (signed short *)calloc(n_samples, sizeof(signed short));
 
   if (inference.buffers[0] == NULL) {
     return false;
   }
 
-  inference.buffers[1] = (signed short *)malloc(n_samples * sizeof(signed short));
+  inference.buffers[1] = (signed short *)calloc(n_samples, sizeof(signed short));
 
   if (inference.buffers[1] == NULL) {
     free(inference.buffers[0]);
     return false;
   }
 
-  inferenceSampleBuffer = (signed short *)malloc((n_samples >> 1) * sizeof(signed short));
+  inferenceSampleBuffer = (signed short *)calloc((n_samples >> 1), sizeof(signed short));
 
   if (inferenceSampleBuffer == NULL) {
     free(inference.buffers[0]);
