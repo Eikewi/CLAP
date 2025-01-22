@@ -63,6 +63,8 @@ pip install pyserial numpy pydub whisper-mps pyttsx3 python-dotenv openai
 ### ffmpeg
 
 Linux: `sudo apt-get update && sudo apt-get install ffmpeg`
+Windows: `winget install "FFmpeg (Essentials Build)"`
+MacOS: `brew install ffmpeg`
 
 ### Running the python script
 
