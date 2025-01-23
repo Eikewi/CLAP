@@ -17,9 +17,9 @@ What you need:
 
 ### Keyword-Detection
 
-Transition: Starts automatically at first
+Transition: Starts automatically at first and restarts after it receives 2 or '2' in serial
 
-LED: Green
+LED: ![#f03c15](https://placehold.co/15x15/00ff00/00ff00.png) Green
 
 Serial: Empty, when SHOW_RESULTS is false
 
@@ -27,7 +27,7 @@ Serial: Empty, when SHOW_RESULTS is false
 
 Transition: When keyword was detected starts automatically
 
-LED: Red
+LED: ![#f03c15](https://placehold.co/15x15/ff0000/ff0000.png) Red
 
 Serial: All the info
 
@@ -35,17 +35,10 @@ Serial: All the info
 
 Transition: Starts when it receives 1 or '1' in serial
 
-LED: Blue
+LED: ![#f03c15](https://placehold.co/15x15/0000ff/0000ff.png) Blue
 
 Serial: Empty
 
-### Restart Keyword-Detection
-
-Transition: Starts when it receives 2 or '2' in serial
-
-LED: Green again
-
-Serial: Empty, when SHOW_RESULTS is false
 
 ## Getting Started
 
