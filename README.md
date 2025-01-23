@@ -1,3 +1,8 @@
+<div align="center">
+    <img alt="ollama" height="200px" src="https://github.com/Eikewi/CLAP/blob/main/clap_logo.png">
+</div>
+
+
 # CLAP
 
 An awesome voice assistant with a keyword-detection-neural-network running on an Arduino and a configurable AI-Pipeline!
