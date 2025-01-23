@@ -1,5 +1,5 @@
 <div align="center">
-    <img alt="ollama" height="200px" src="https://github.com/Eikewi/CLAP/blob/main/clap_logo.png">
+    <img alt="ollama" height="200px" src="https://github.com/Eikewi/CLAP/blob/main/clap_logo.png" style="border-radius: 15px;">
 </div>
 
 
