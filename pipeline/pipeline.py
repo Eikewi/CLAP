@@ -74,7 +74,7 @@ def main(a2t_model, model, tolerance, n_remember_msg, useOpenAI=False):
         txt_audio = a2t(a2t_model, "output.mp3")
         a2t_time2 = time()
         print(f"Text from Audio: {txt_audio}")
-        print(f"--------t2a took {round(a2t_time2 - a2t_time1, 2)}s--------")
+        print(f"--------a2t took {round(a2t_time2 - a2t_time1, 2)}s--------")
         #txt_audio = input("Frage:") # If you want to use llm without Arduino (uncomment above)
 
         audio_lambda = lambda x: create_audio(x, tts_queue)
