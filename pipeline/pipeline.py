@@ -6,32 +6,8 @@ from get_audio_stream import record_audio, clean_serial
 from multiprocessing import Process, Queue
 from time import time
 
-'''
-TODO:
----------------------------------------------------
-[x] multithreading for txt2speech (faster answers)
----------------------------------------------------
-[x] using ChatGPT API
-    [x] test ChatGPT API key
----------------------------------------------------
-[x] Chat history for llm (context based answers)
-    [x] history for OpenAI
-    [x] history for Ollama
----------------------------------------------------
-[ ] be able to interrupt CLAP
----------------------------------------------------
-[ ] support english in txt2audio (currently only german)
----------------------------------------------------
-FIXME:
-[ ] Sometimes activates 
-    without waiting for the activation word
-=> i think it happens when the audio buffer gets cut off 
-    before everything was send
-Recrate: 1. start clap and do not say anything
-         2. Wait for answer and see that it restarts instant after that
-'''
 # Should OpenAI be used (Note: an API-Key needed)
-useOpenAI = True
+useOpenAI = False
 
 # NOTE: NOT YET FULLY TESTED
 # Change if used in an loud environment to f.e. 0.5

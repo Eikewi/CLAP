@@ -29,6 +29,8 @@ def stop_recording():
 
 def start_recording():
     print("Keyword detection started")
+    with serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1) as ser:
+        ser.read_all()
     send_number(b'\x02')
 
 def clean_serial():
@@ -86,7 +88,7 @@ def record_audio(tolerance=1.0):
 
                     if count_TIMEOUT > NUM_TIMEOUT_SAMPLES * alpha:
                         stop_recording()
-                        # print(count_TIMEOUT)
+
                         break
 
             except Exception as e:

@@ -75,7 +75,7 @@ def run_llm(input: str, audio_lambda, threshold:int, model, n_remember_msg=1, us
         conversation_history.append({"role": "user", "content": input})
 
         prompt = ""
-        for message in conversation_history[-n_remember_msg:]:
+        for message in conversation_history[-(n_remember_msg*2):]:
             if message["role"] == "user":
                 prompt += f"User: {message['content']}\n"
             elif message["role"] == "assistant":
@@ -91,7 +91,7 @@ def run_llm(input: str, audio_lambda, threshold:int, model, n_remember_msg=1, us
         "prompt": f"{prompt}", 
         "system": f"{sys_instruction}"
         }
-        print(conversation_history)
+        print(prompt)
         response = requests.post(url, json=data, stream=True)
 
         message = ""
@@ -123,6 +123,8 @@ def run_llm(input: str, audio_lambda, threshold:int, model, n_remember_msg=1, us
                     print("ERROR: json error occurred, but ignoring it")
                     continue
         if start_pos < len(message):
+            if len(message) < 7 or message == " Thanks for watching!\n": # Weird audio engine bug (happens if it receives nothing)
+                message = ""
             print(message[start_pos:])
             audio_lambda(message[start_pos:])
 
