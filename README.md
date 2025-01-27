@@ -2,15 +2,15 @@
     <img alt="ollama" height="200px" src="https://github.com/Eikewi/CLAP/blob/main/clap_logo.png">
 </div>
 
-
 # CLAP
 
 An awesome voice assistant with a keyword-detection-neural-network running on an Arduino and a configurable AI-Pipeline!
 
-## Arduino 
+## Arduino
 
-What you need: 
-- CLAP_inferencing.zip included as ZIP-Library in Arduino IDE
+What you need:
+
+- `ei-clap-arduino-1.0.8.zip` included as ZIP-Library in Arduino IDE
 - A working Arduino Nano 33 BLE Sense Rev2
 - A USB-to-Micro-USB cable
 - A working computer with USB ports
