@@ -7,17 +7,18 @@ from multiprocessing import Process, Queue
 from time import time
 
 # Should OpenAI be used (Note: an API-Key needed)
-useOpenAI = False
+useOpenAI = True
 
 # NOTE: NOT YET FULLY TESTED
 # Change if used in an loud environment to f.e. 0.5
 #   (high values -> wait longer for a response)
-tolerance = 3.0
+tolerance = 1.0
 
 # ---------Choose an available model---------------
 # OpenAI model list: https://openai.com/api/pricing/
 if useOpenAI:
     model = "gpt-4o-mini"
+    model = "chatgpt-4o-latest"
     n_remember_msg = 10 
 else:
 # Ollama model list: https://ollama.com/library 
@@ -26,7 +27,7 @@ else:
 
     # How many messages should be remembered 
     #    (large numbers reduce the answer quality)
-    n_remember_msg = 3 
+    n_remember_msg = 2 
 
 def init_all_models(model, useOpenAI=False):
     '''

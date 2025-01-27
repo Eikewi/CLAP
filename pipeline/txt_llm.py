@@ -12,7 +12,7 @@ Local models: Use Ollama API for an Mac optimize local models.
 # API-URL
 # Ollama local-API:
 url = "http://localhost:11434/api/generate"
-sys_instruction = "You are a language assistant that only speaks english. Respond in only 2-3 sentences. Please avoid bullet points or anything similar that is hard to read."
+sys_instruction = "You are a language assistant and you only answer in English. Respond in only 2-3 sentences. Please avoid bullet points or anything similar that is hard to read."
 conversation_history = []
 
 def init_llm(model, useOpenAI):
