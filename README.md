@@ -15,6 +15,12 @@ What you need:
 - A USB-to-Micro-USB cable
 - A working computer with USB ports
 
+### Demo Video
+<video controls width="600">
+  <source src="https://github.com/Eikewi/CLAP/blob/main/preview.mp4" type="video/mp4">
+  Dein Browser unterstützt dieses Videoformat nicht.
+</video>
+
 ### Keyword-Detection
 
 Transition: Starts automatically at first and restarts after it receives 2 or '2' in serial
