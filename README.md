@@ -16,10 +16,7 @@ What you need:
 - A working computer with USB ports
 
 ### Demo Video
-<video controls width="600">
-  <source src="https://github.com/Eikewi/CLAP/blob/main/preview.mp4" type="video/mp4">
-  Dein Browser unterstützt dieses Videoformat nicht.
-</video>
+[Mein Video hier ansehen](https://github.com/Eikewi/CLAP/blob/main/preview.mp4)
 
 ### Keyword-Detection
 
