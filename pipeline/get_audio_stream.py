@@ -92,10 +92,10 @@ def record_audio(tolerance=1.0):
                         break
 
             except Exception as e:
-                print(f"Fehler: {e}")
+                print(f"Error: {e}")
                 break
 
-    print(f"Aufnahme beendet. {len(audio_data)} Samples gesammelt.")
+    print(f"Recording stopped. {len(audio_data)} samples collected.")
 
     audio_data = np.clip(audio_data, -32768, 32767) #make sure we do not get a overflow
     audio_array = np.array(audio_data, dtype=np.int16)
@@ -110,7 +110,7 @@ def record_audio(tolerance=1.0):
 
     # save as MP3
     audio_segment.export(OUTPUT_FILE, format="mp3")
-    print(f"Audio gespeichert als '{OUTPUT_FILE}'.")
+    print(f"Audio saved as '{OUTPUT_FILE}'.")
 
     return audio_segment
 

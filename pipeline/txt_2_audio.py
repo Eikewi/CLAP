@@ -14,7 +14,7 @@ def init_audio():
     return pyttsx3.init()
 
 def tts_process(tts_queue):
-    """Separater Prozess für die TTS-Engine."""
+    """Separate process fpr the TTS-Engine"""
     engine = pyttsx3.init() # can not be refactored, because engine can not be pickled
     engine.setProperty('rate', 165)
     #engine.setProperty('voice', "com.apple.eloquence.en-US.Eddy")
@@ -28,7 +28,7 @@ def tts_process(tts_queue):
         engine.runAndWait()
 
 def create_audio(text, tts_queue):
-    # Initialisieren des TTS-Engines
+    # Initializing the TTS-Engine
     tts_queue.put(text)
 
 #available Languages:
