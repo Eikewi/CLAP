@@ -17,9 +17,7 @@ What you need:
 - A working computer with USB ports
 
 ### Demo Video
-<video src="https://github.com/user-attachments/assets/7f52a635-189b-4524-bf02-a25c52fe0ebe" controls width="600">
-  Dein Browser unterstützt dieses Video-Tag nicht.
-</video>
+https://github.com/user-attachments/assets/6045cf8b-ffed-4a22-a9a2-401b08a89cb5
 
 ### Keyword-Detection
 
