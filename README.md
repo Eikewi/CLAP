@@ -1,6 +1,7 @@
 <div align="center">
-    <img alt="ollama" height="200px" src="https://github.com/Eikewi/CLAP/blob/main/clap_logo.png">
+    <img alt="ollama" height="200px" src="https://github.com/user-attachments/assets/709f4826-436d-4857-9c3a-cadd48d38851">
 </div>
+
 
 # CLAP
 
@@ -16,7 +17,9 @@ What you need:
 - A working computer with USB ports
 
 ### Demo Video
-[Mein Video hier ansehen](https://github.com/Eikewi/CLAP/blob/main/preview.mp4)
+<video src="https://github.com/user-attachments/assets/7f52a635-189b-4524-bf02-a25c52fe0ebe"></video>
+
+
 
 ### Keyword-Detection
 
