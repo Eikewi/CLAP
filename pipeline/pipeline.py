@@ -7,7 +7,7 @@ from multiprocessing import Process, Queue
 from time import time
 
 # Should OpenAI be used (Note: an API-Key needed)
-useOpenAI = True
+useOpenAI = False
 
 # NOTE: NOT YET FULLY TESTED
 # Change if used in an loud environment to f.e. 0.5
